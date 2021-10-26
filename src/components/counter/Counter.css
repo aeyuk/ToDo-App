@@ -1,0 +1,12 @@
+.resetButton {
+    background-color: red;
+    font-size: 16px;
+    padding: 15px;
+    color: white;
+    width: 100px;
+}
+
+.count {
+    font-size: 50px;
+    padding: 15px;
+}
