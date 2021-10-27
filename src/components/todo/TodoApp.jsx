@@ -4,6 +4,7 @@ import Login from './Login';
 import Welcome from './Welcome';
 import Error from './Error';
 import TodoList from './TodoList';
+import Logout from './Logout';
 
 import Header from '../style/Header';
 import Footer from '../style/Footer'
@@ -19,7 +20,8 @@ function TodoApp() {
                             <Route path="/" exact component={Login}></Route>
                             <Route path="/login" exact component={Login}/>
                             <Route path="/welcome/:name" exact component={Welcome}/> 
-                            <Route path="/todos" exact component={TodoList}/>     
+                            <Route path="/todos" exact component={TodoList}/>
+                            <Route path="/logout" exact component={Logout}/>          
                             <Route component={Error}/>                           
                         </Switch>
                     <Footer/>
