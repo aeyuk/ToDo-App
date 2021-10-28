@@ -1,15 +1,15 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Login from './Login';
+import Login from '../session/Login';
 import Welcome from './Welcome';
 import Error from './Error';
 import TodoList from './TodoList';
-import Logout from './Logout';
-
+import Logout from '../session/Logout';
 import Header from '../style/Header';
 import Footer from '../style/Footer';
+import AuthenticatedRoute from '../session/AuthenticatedRoute';
 
-import AuthenticationService from './AuthenticationService.js';
+// import AuthenticationService from './AuthenticationService.js';
 
 
 function TodoApp() {
@@ -21,9 +21,9 @@ function TodoApp() {
                         <Switch>
                             <Route path="/" exact component={Login}></Route>
                             <Route path="/login" exact component={Login}/>
-                            <Route path="/welcome/:name" exact component={Welcome}/> 
-                            <Route path="/todos" exact component={TodoList}/>
-                            <Route path="/logout" exact component={Logout}/>          
+                            <AuthenticatedRoute path="/welcome/:name" exact component={Welcome}/> 
+                            <AuthenticatedRoute path="/todos" exact component={TodoList}/>
+                            <AuthenticatedRoute path="/logout" exact component={Logout}/>          
                             <Route component={Error}/>                           
                         </Switch>
                     <Footer/>

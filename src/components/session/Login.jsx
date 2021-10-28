@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import AuthenticationService from './AuthenticationService.js';
+import AuthenticationService from '../session/AuthenticationService.js';
 
 function Login() {
     const [username, setUsername] = useState("cate");

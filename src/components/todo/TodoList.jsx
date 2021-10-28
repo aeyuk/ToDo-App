@@ -31,7 +31,6 @@ function TodoList() {
                 <table className="table" style={{textAlign: "left"}}>
                     <thead>
                         <tr >
-                            <th>id</th>
                             <th>task</th>
                             <th>target date</th>
                             <th>done?</th>
