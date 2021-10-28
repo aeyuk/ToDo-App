@@ -1,32 +1,33 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import AuthenticationService from './AuthenticationService.js';
 
 function Login() {
     const [username, setUsername] = useState("cate");
     const [password, setPassword] = useState("");
+    const [hasLoginFailed, setHasLoginFailed] = useState(false);
 
     const history = useHistory();
 
     function loginClicked() {
         if (username === "cate" && password === "dummy") {
-            console.log("Successful login")
+            AuthenticationService.registerSuccessfulLogin(username, password);
             history.push(`/welcome/${username}`);
-            // setHasLoginFailed(false);
-            // setShowSuccessMessage(true);
+            setHasLoginFailed(false);
         } else {
-            console.log("Login failed")
-            // setHasLoginFailed(true);
-            // setShowSuccessMessage(false);
+            setHasLoginFailed(true);
         }
     }
     
     return (
         <div>
-            {/* <div hidden={!hasLoginFailed}>Invalid Credentials</div> */}
-            {/* <div hidden={!showSuccessMessage}>Login Successful</div> */}
-            Username: <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-            Password: <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-            <button onClick={loginClicked}>Login</button>
+            <h1>Login</h1>
+            <div className="container">
+                {hasLoginFailed && <div className="alert alert-warning">Invalid Credentials</div>}
+                Username: <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                Password: <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <button className="btn btn-success" onClick={loginClicked}>Login</button>
+            </div>
         </div>
     )
 }

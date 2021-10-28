@@ -26,31 +26,35 @@ function TodoList() {
 
     return (
         <div>
-            <h1>Todo:</h1>
-            <table style={{textAlign: "left"}}>
-                <thead>
-                    <tr >
-                        <th>id</th>
-                        <th>task</th>
-                        <th>target date</th>
-                        <th>done?</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {todoList.map((todo) => (
-                        <tr key={todo.id}>
-                            <td>{todo.id}</td>
-                            <td>{todo.task}</td>
-                            <td>{todo.targetDate.toString()}</td>
-                            <td>{todo.done.toString()}</td>
+            <h1>Todo List:</h1>
+            <div className="container">
+                <table className="table" style={{textAlign: "left"}}>
+                    <thead>
+                        <tr >
+                            <th>id</th>
+                            <th>task</th>
+                            <th>target date</th>
+                            <th>done?</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        {todoList.map((todo) => (
+                            <tr key={todo.id}>
+                                <td>{todo.task}</td>
+                                <td>{todo.targetDate.toString()}</td>
+                                <td>{todo.done.toString()}</td>
+                            </tr>
 
-                    ))}
-                </tbody>
-            </table>
-            <input type="text" onChange={(e) => setTask(e.target.value)}></input>
-            <input type="text" onChange={(e) => setTargetDate(e.target.value)}></input>
-            <button onClick={updateTodoList}>Add</button>
+                        ))}
+                    </tbody>
+                </table>
+                <div className="container" style={{float: "right", width: "50%"}}>
+                    <input placeholder="Enter Todo" type="text" onChange={(e) => setTask(e.target.value)}></input>
+                    <input placeholder="Enter Target Date" type="text" onChange={(e) => setTargetDate(e.target.value)}></input>
+                    <button className="btn btn-success" onClick={updateTodoList}>Add</button>
+                </div>
+
+            </div>
         </div>
     );
 }

@@ -9,9 +9,13 @@ function Welcome() {
     }
 
     return (
-        <div>Welcome, {getName(pathName)}! You can manage your todos <Link to="/todos" >here.</Link>
+        <>
+            <h1>Welcome</h1>
+            <div className="container">
+                Welcome, {getName(pathName)}! You can manage your todos <Link to="/todos" >here.</Link>
+            </div>
             
-        </div>
+        </>
     )
 }
 

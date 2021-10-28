@@ -7,7 +7,9 @@ import TodoList from './TodoList';
 import Logout from './Logout';
 
 import Header from '../style/Header';
-import Footer from '../style/Footer'
+import Footer from '../style/Footer';
+
+import AuthenticationService from './AuthenticationService.js';
 
 
 function TodoApp() {
