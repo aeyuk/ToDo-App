@@ -19,6 +19,20 @@ function Welcome() {
             // .catch(alert("error with promise"));
     }
 
+    function retrieveHelloWorldBean() {
+        HelloWorldService.executeHelloWorldBeanService()
+            .then(response => setWelcomeMessage(response.data.message))
+            // .catch(alert("error with promise"));
+    }
+
+    function retrieveHelloWorldBeanWithPath() {
+        const name = getName(pathName);
+        HelloWorldService.executeHelloWorldBeanWithPathService(name)
+            .then(response => setWelcomeMessage(response.data.message))
+            // .catch(alert("error with promise"));
+    }
+
+
     return (
         <>
             <h1>Welcome</h1>
@@ -26,13 +40,10 @@ function Welcome() {
                 Welcome, {getName(pathName)}! You can manage your todos <Link to="/todos" >here.</Link>
             </div>
             <div className="container">
-                Click here to get a customized welcome message:
-                <div>
-                    <button onClick={retrieveWelcomeMessage} className="btn btn-success">Click me!</button>
-                </div>
-                <div>
-                    {welcomeMessage}
-                </div>
+                <button onClick={retrieveWelcomeMessage} className="btn btn-success">Hello World</button>
+                <button onClick={retrieveHelloWorldBean} className="btn btn-info">Hello World Bean</button>
+                <button onClick={retrieveHelloWorldBeanWithPath} className="btn btn-danger">Hello World Bean with Path</button>
+                <h2>{welcomeMessage}</h2>
             </div>
             
         </>
