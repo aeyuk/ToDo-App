@@ -21,8 +21,8 @@ function TodoApp() {
                         <Switch>
                             <Route path="/" exact component={Login}></Route>
                             <Route path="/login" exact component={Login}/>
-                            <AuthenticatedRoute path="/welcome/:name" exact component={Welcome}/> 
-                            <AuthenticatedRoute path="/todos" exact component={TodoList}/>
+                            <AuthenticatedRoute path="/welcome/:username" exact component={Welcome}/> 
+                            <AuthenticatedRoute path="/todos/:username" exact component={TodoList}/>
                             <AuthenticatedRoute path="/logout" exact component={Logout}/>          
                             <Route component={Error}/>                           
                         </Switch>
