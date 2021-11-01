@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import HelloWorldService from '../../api/todo/HelloWorldService.js';
 
-
 function Welcome() {
     const [welcomeMessage, setWelcomeMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const pathName = useLocation().pathname;
 
@@ -16,20 +16,23 @@ function Welcome() {
     function retrieveWelcomeMessage() {
         HelloWorldService.executeHelloWorldService()
             .then(response => setWelcomeMessage(response.data))
-            // .catch(alert("error with promise"));
     }
 
     function retrieveHelloWorldBean() {
         HelloWorldService.executeHelloWorldBeanService()
             .then(response => setWelcomeMessage(response.data.message))
-            // .catch(alert("error with promise"));
     }
 
     function retrieveHelloWorldBeanWithPath() {
         const name = getName(pathName);
         HelloWorldService.executeHelloWorldBeanWithPathService(name)
-            .then(response => setWelcomeMessage(response.data.message))
-            // .catch(alert("error with promise"));
+            .then(response => {
+                setWelcomeMessage(response.data.message);
+            })
+            .catch(error => {
+                setErrorMessage(error.response.data.message);
+                setWelcomeMessage("");
+            })
     }
 
 
@@ -40,10 +43,11 @@ function Welcome() {
                 Welcome, {getName(pathName)}! You can manage your todos <Link to="/todos" >here.</Link>
             </div>
             <div className="container">
-                <button onClick={retrieveWelcomeMessage} className="btn btn-success">Hello World</button>
-                <button onClick={retrieveHelloWorldBean} className="btn btn-info">Hello World Bean</button>
-                <button onClick={retrieveHelloWorldBeanWithPath} className="btn btn-danger">Hello World Bean with Path</button>
+                <button onClick={retrieveWelcomeMessage} className="cateButton btn btn-success">Hello World</button>
+                <button onClick={retrieveHelloWorldBean} className="cateButton btn btn-info">Hello World Bean</button>
+                <button onClick={retrieveHelloWorldBeanWithPath} className="cateButton btn btn-danger">Hello World Bean with Path</button>
                 <h2>{welcomeMessage}</h2>
+                <h2 hidden={welcomeMessage}>{errorMessage}</h2>
             </div>
             
         </>
