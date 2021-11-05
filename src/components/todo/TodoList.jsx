@@ -4,6 +4,8 @@ import TodoDataService from '../../api/todo/TodoDataService.js'
 
 function TodoList() {
     const [todoList, setTodoList] = useState([]);
+    const [description, setDescription] = useState("");
+    const [refresh, setRefresh] = useState(false);
     
     const pathName = useLocation().pathname;
     const username = pathName.substring(pathName.lastIndexOf('/') + 1);    
@@ -11,12 +13,19 @@ function TodoList() {
     useEffect(() => {
         TodoDataService.executeTodoDataService(username)
             .then(response => setTodoList(response.data));
-    }, []);
+    }, [username, refresh]);
 
-    // function deleteTodo(username, id) {
-    //     TodoDataService.deleteTodo(username, id)
-    //         .then(response => alert(response.data));
-    // }
+    function deleteTodo(id) {
+        TodoDataService.executeDeleteTodo(username, id)
+            .then(response => setRefresh(!refresh));
+    }
+
+    function addTodo() {
+        const defaultTargetDate = new Date();
+        const defaultDone = false;
+        TodoDataService.executeAddTodo(username, description, defaultTargetDate, defaultDone)
+            .then(response => setRefresh(!refresh));
+    }
 
     return (
         <div>
@@ -36,12 +45,16 @@ function TodoList() {
                                 <td>{todo.description}</td>
                                 <td>{todo.targetDate.toString()}</td>
                                 <td>{todo.done.toString()}</td>
-                                {/* <td><button onClick={deleteTodo(username, todo.id)}>Delete</button></td> */}
+                                <td><button className="btn btn-danger" onClick={() => deleteTodo(todo.id)}>Delete</button></td>
                             </tr>
 
                         ))}
                     </tbody>
                 </table>
+            </div>
+            <div className="container" style={{float: "right", width: "50%"}}>
+                <input placeholder="Enter New Todo" onChange={(e) => setDescription(e.target.value)}></input>
+                <button className="btn btn-success" onClick={() => addTodo()}>Add</button>
             </div>
         </div>
     );

@@ -6,14 +6,23 @@ class TodoDataService {
         return axios.get(`http://localhost:8080/todos/${username}`);
     }
 
-    // executeTodoDataService(username, id) {
-    //     return axios.delete(`http://localhost:8080/todos/${username}`, {
-    //         data: {
-    //             username: username,
-    //             id: id
-    //         }
-    //     });
-    // }
+    executeDeleteTodo(username, id) {
+        return axios.delete(`http://localhost:8080/todos/${username}/${id}`, {
+            data: {
+                username: username,
+                id: id
+            } //try removing this to see what happens
+        });
+    }
+
+    executeAddTodo(username, description, targetDate, done) {
+        return axios.post(`http://localhost:8080/todos/${username}/add`, {
+            username: username,
+            description: description,
+            targetDate: targetDate,
+            done: done
+        });
+    }
 }
 
-export default new TodoDataService;
+export default new TodoDataService();
