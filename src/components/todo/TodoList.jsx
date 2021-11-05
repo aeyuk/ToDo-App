@@ -3,31 +3,20 @@ import { useLocation } from 'react-router-dom';
 import TodoDataService from '../../api/todo/TodoDataService.js'
 
 function TodoList() {
-    const [description, setDescription] = useState("");
-    const [targetDate, setTargetDate] = useState("10/20/1998");
     const [todoList, setTodoList] = useState([]);
     
     const pathName = useLocation().pathname;
+    const username = pathName.substring(pathName.lastIndexOf('/') + 1);    
 
     useEffect(() => {
-        const name = pathName.substring(pathName.lastIndexOf('/') + 1);    
-        TodoDataService.executeTodoDataService(name)
+        TodoDataService.executeTodoDataService(username)
             .then(response => setTodoList(response.data));
     }, []);
 
-    // function updateTodoList() {
-    //     const newList = [
-    //         ...todoList,
-    //         {
-    //             id: todoList.length + 1,
-    //             description: description,
-    //             targetDate: targetDate,
-    //             done: false
-    //         }
-    //     ];
-
-    //     setTodoList(newList);
-    // } 
+    // function deleteTodo(username, id) {
+    //     TodoDataService.deleteTodo(username, id)
+    //         .then(response => alert(response.data));
+    // }
 
     return (
         <div>
@@ -47,17 +36,12 @@ function TodoList() {
                                 <td>{todo.description}</td>
                                 <td>{todo.targetDate.toString()}</td>
                                 <td>{todo.done.toString()}</td>
+                                {/* <td><button onClick={deleteTodo(username, todo.id)}>Delete</button></td> */}
                             </tr>
 
                         ))}
                     </tbody>
                 </table>
-                {/* <div className="container" style={{float: "right", width: "50%"}}>
-                    <input placeholder="Enter Todo" type="text" onChange={(e) => setTask(e.target.value)}></input>
-                    <input placeholder="Enter Target Date" type="text" onChange={(e) => setTargetDate(e.target.value)}></input>
-                    <button className="btn btn-success" onClick={updateTodoList}>Add</button>
-                </div> */}
-
             </div>
         </div>
     );

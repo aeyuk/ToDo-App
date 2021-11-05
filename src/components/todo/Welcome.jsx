@@ -7,11 +7,7 @@ function Welcome() {
     const [errorMessage, setErrorMessage] = useState("");
 
     const pathName = useLocation().pathname;
-
-    function getName(pathName) {
-        const name = pathName.substring(pathName.lastIndexOf('/') + 1);
-        return name;
-    }
+    const username = pathName.substring(pathName.lastIndexOf('/') + 1);
 
     function retrieveWelcomeMessage() {
         HelloWorldService.executeHelloWorldService()
@@ -24,8 +20,7 @@ function Welcome() {
     }
 
     function retrieveHelloWorldBeanWithPath() {
-        const name = getName(pathName);
-        HelloWorldService.executeHelloWorldBeanWithPathService(name)
+        HelloWorldService.executeHelloWorldBeanWithPathService(username)
             .then(response => {
                 setWelcomeMessage(response.data.message);
             })
@@ -40,7 +35,7 @@ function Welcome() {
         <>
             <h1>Welcome</h1>
             <div className="container">
-                Welcome, {getName(pathName)}! You can manage your todos <Link to="/todos" >here.</Link>
+                Welcome, {username}! You can manage your todos <Link to={`/todos/${username}`}>here.</Link>
             </div>
             <div className="container">
                 <button onClick={retrieveWelcomeMessage} className="cateButton btn btn-success">Hello World</button>
