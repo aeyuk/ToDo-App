@@ -7,10 +7,8 @@ import TodoList from './TodoList';
 import Logout from '../session/Logout';
 import Header from '../style/Header';
 import Footer from '../style/Footer';
+import Todo from '../todo/Todo';
 import AuthenticatedRoute from '../session/AuthenticatedRoute';
-
-// import AuthenticationService from './AuthenticationService.js';
-
 
 function TodoApp() {
     return (
@@ -24,6 +22,7 @@ function TodoApp() {
                             <AuthenticatedRoute path="/welcome/:username" exact component={Welcome}/> 
                             <AuthenticatedRoute path="/todos/:username" exact component={TodoList}/>
                             <AuthenticatedRoute path="/logout" exact component={Logout}/>          
+                            <AuthenticatedRoute path="/todos/update/:id" exact component={Todo}/>          
                             <Route component={Error}/>                           
                         </Switch>
                     <Footer/>

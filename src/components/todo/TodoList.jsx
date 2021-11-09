@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import TodoDataService from '../../api/todo/TodoDataService.js'
 
 function TodoList() {
@@ -9,6 +9,8 @@ function TodoList() {
     
     const pathName = useLocation().pathname;
     const username = pathName.substring(pathName.lastIndexOf('/') + 1);    
+
+    const history = useHistory();
 
     useEffect(() => {
         TodoDataService.executeTodoDataService(username)
@@ -25,6 +27,17 @@ function TodoList() {
         const defaultDone = false;
         TodoDataService.executeAddTodo(username, description, defaultTargetDate, defaultDone)
             .then(response => setRefresh(!refresh));
+    }
+
+    function updateTodo(id, oldDescription, oldTargetDate) {
+        history.push({
+            pathname: `/todos/update/${id}`,
+            state: {
+                id: id,
+                description: oldDescription,
+                targetDate: oldTargetDate
+            }
+        });
     }
 
     return (
@@ -46,6 +59,7 @@ function TodoList() {
                                 <td>{todo.targetDate.toString()}</td>
                                 <td>{todo.done.toString()}</td>
                                 <td><button className="btn btn-danger" onClick={() => deleteTodo(todo.id)}>Delete</button></td>
+                                <td><button className="btn btn-info" onClick={() => updateTodo(todo.id, todo.description, todo.targetDate)}>Update</button></td>
                             </tr>
 
                         ))}
@@ -56,6 +70,7 @@ function TodoList() {
                 <input placeholder="Enter New Todo" onChange={(e) => setDescription(e.target.value)}></input>
                 <button className="btn btn-success" onClick={() => addTodo()}>Add</button>
             </div>
+
         </div>
     );
 }
