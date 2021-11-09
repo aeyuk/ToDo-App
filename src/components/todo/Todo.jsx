@@ -1,7 +1,6 @@
-// import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-// import moment from 'moment';
-import { Formik, Field, Form } from 'formik';
+import moment from 'moment';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 
 function Todo() {
 
@@ -13,17 +12,36 @@ function Todo() {
         console.log(values);
     }
 
+    function validate(values) {
+        let errors = {};
+        if (!values.description) {
+            errors.description = 'Enter a Description';
+        } else if (values.description.length < 5) {
+            errors.description = 'Description should be at least five characters';
+        }
+
+        if (!moment(values.targetDate).isValid()) {
+            errors.targetDate = 'Enter a valid Target Date';
+        }
+
+        return errors;
+    }
+
     return (
         <div>
             <h1>Todo</h1>
             <div className="container">
                 <Formik 
                     initialValues={{ description, targetDate }}
-                    onSubmit={onSubmit}>
+                    onSubmit={onSubmit}
+                    validateOnChange={false}
+                    validateOnBlur={false}
+                    validate={validate}>
                     {
                         (props) => (
-                            // <div>{location.state.id} {location.state.description} {location.state.targetDate}</div>
                             <Form>
+                                <ErrorMessage name="description" component="div" className="alert alert-warning"/>
+                                <ErrorMessage name="targetDate" component="div" className="alert alert-warning"/>
                                 <fieldset className="form-group">
                                     <label>Description</label>
                                     <Field className="form-control" type="text" name="description"/>
