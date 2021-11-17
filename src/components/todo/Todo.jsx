@@ -1,15 +1,22 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
+import TodoDataService from '../../api/todo/TodoDataService';
+import AuthenticationService from '../session/AuthenticationService'
 
 function Todo() {
 
     const location = useLocation();
 
+    const history = useHistory();
+
     let { description, targetDate } = location.state;
 
+    let username = AuthenticationService.getLoggedInUsername();
+
     function onSubmit(values) {
-        console.log(values);
+        TodoDataService.executeUpdateTodo(username, location.state.id, values.description, values.targetDate);
+        history.push({pathname: `/todos/${username}`});
     }
 
     function validate(values) {

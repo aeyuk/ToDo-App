@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import HelloWorldService from '../../api/todo/HelloWorldService.js';
+import AuthenticationService from '../session/AuthenticationService'
 
 function Welcome() {
     const [welcomeMessage, setWelcomeMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
-    const pathName = useLocation().pathname;
-    const username = pathName.substring(pathName.lastIndexOf('/') + 1);
+    let username = AuthenticationService.getLoggedInUsername();
 
     function retrieveWelcomeMessage() {
         HelloWorldService.executeHelloWorldService()

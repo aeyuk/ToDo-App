@@ -1,4 +1,9 @@
 class AuthenticationService {
+    getLoggedInUsername() {
+        let user = sessionStorage.getItem('authenticatedUser');
+        return user;
+    }
+
     registerSuccessfulLogin(username, password) {
         sessionStorage.setItem('authenticatedUser', username);
         console.log("logged in");

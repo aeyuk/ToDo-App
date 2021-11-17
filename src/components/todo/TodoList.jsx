@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import TodoDataService from '../../api/todo/TodoDataService.js'
+import AuthenticationService from '../session/AuthenticationService'
 
 function TodoList() {
     const [todoList, setTodoList] = useState([]);
     const [description, setDescription] = useState("");
     const [refresh, setRefresh] = useState(false);
     
-    const pathName = useLocation().pathname;
-    const username = pathName.substring(pathName.lastIndexOf('/') + 1);    
+    let username = AuthenticationService.getLoggedInUsername();
 
     const history = useHistory();
 
